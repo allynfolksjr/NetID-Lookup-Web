@@ -1,2 +1,2 @@
 json.ferd 'doop'
-json.metadata @metadata
+json.metadata @data[:mysql]
