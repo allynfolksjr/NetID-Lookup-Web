@@ -23,9 +23,9 @@ class Lookup
   def do
     metadata = {}
     metadata[:mysql] = check_for_mysql
-    # metadata[:processes] = get_processes
-    # metadata[:localhome] = check_for_localhome
-    # metadata[:webtypes] = check_webtype
+    metadata[:processes] = get_processes
+    metadata[:localhome] = check_for_localhome
+    metadata[:webtypes] = check_webtype
     # metadata[:quota] = check_quota
     metadata
   end
@@ -36,16 +36,28 @@ class Lookup
       result = netid_interface.check_for_mysql_presence(host)
       results << host if result
     end
-    results.empty? ? results : false
+    results.empty? ? false : results
   end
 
   def get_processes
+    results = {}
+    hosts.each do |host|
+      processes = netid_interface.get_processes(host)
+      if processes
+        results[host.to_s] = processes
+      end
+    end
+    results
   end
 
   def check_for_localhome
+    result = netid_interface.check_for_localhome
+    result ? result : false
   end
 
   def check_webtype
+    result = netid_interface.check_webtype
+    result ? result : false
   end
 
   def check_quota
