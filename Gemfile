@@ -51,3 +51,4 @@ end
 # Use debugger
 gem 'debugger', group: [:development, :test]
 gem 'rspec-rails', group: [:development, :test]
+gem 'zeus', group: [:development, :test]
