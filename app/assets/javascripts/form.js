@@ -1,24 +1,29 @@
 $(document).ready(function(){
+  var form_field = $('#netid');
   var button = $('#netid_form');
   var netid;
   var result_field = $('div#result');
 
   button.on('click',function(){
-    turn_loading_on_for_button();
-    console.log('hi');
-    netid = $('#netid').val();
-    console.log(netid);
-    get_netid();
+    make_request_process();
   });
 
+  form_field.keydown(function(k){
+    if (k.keyCode === 13) {
+      make_request_process();
+    }
+  });
+
+  var make_request_process = function() {
+    turn_loading_on_for_button();
+    netid = form_field.val();
+    console.log(netid);
+    get_netid();
+  }
 
   var get_netid = function() {
-    $.getJSON(netid, function(data) {
-      var fields = [];
-      $.each(data, function(k,v){
-        fields.push('<li id="' + k + '">' + k + ': ' + v + '</li>');
-      });
-      update_results(fields.join(''));
+    $.get(netid + "?embed=true", function(data) {
+      update_results(data);
       turn_loading_off_for_button();
     });
   }

@@ -5,12 +5,15 @@ class LookupController < ApplicationController
   def info
     @netid = params[:netid]
     lookup = Lookup.new(@netid)
-    unless lookup.validate_netid
-      @error_text = "#{params[:netid]} is not a valid NetID"
-      render 'error'
-    end
+    if lookup.validate_netid
+      @data = lookup.do
+      if params[:embed]
+        render "info", layout: "basic"
+      end
+    else
+     @error_text = "#{params[:netid]} is not a valid NetID"
+     render 'error', layout: "basic"
+   end
 
-    @data = lookup.do
-
-  end
+ end
 end

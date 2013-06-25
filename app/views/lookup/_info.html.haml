@@ -1,0 +1,98 @@
+%h3
+  Results for
+  = @netid
+.row
+  .span12
+    %h4 Running MySQL Processes
+    - if @data[:mysql]
+      - if @data[:mysql].size == 1
+        %p=@data[:mysql].first
+        %p
+          %i.icon-ok
+          One MySQL server detected. No issues found.
+      - else
+        %ul
+        - @data[:mysql].each do |h|
+          %li= h
+        %p.text-error
+          %i.icon-flag
+          Multiple MySQL servers detected.
+    - else
+      %p None Detected
+      %p
+        %i.icon-info-sign
+        MySQL is used to provide databasing support for WordPress, Drupal, MediaWiki, and other content systems.
+.row
+  .span12
+    %h4 Localhome
+    - if @data[:localhome]
+      %p
+        = @data[:localhome]
+      %p
+        %i.icon-ok
+        You have a localhome set up; awesome!
+    - else
+      %p
+        No localhome set
+      - if @data[:mysql]
+        %p.text-error
+          %i.icon-flag
+          Localhome is important for faculty, staff, depts and courses that are running MySQL servers or cronjobs.
+      - else
+        %p
+          %i.icon-info-sign
+          Localhome is important if this NetID is running MySQL or cronjobs.
+.row
+  .span12
+    %h4 WebTypes/URLs
+    - if @data[:webtypes].size == 1
+      %p= netid_url(@data[:webtypes].first)
+    - else
+      %ul
+      - @data[:webtypes].each do |wt|
+        %li= netid_url(wt)
+      %br/
+      %p.text-info
+        %i.icon-ok
+        Student staff may have multiple URLs and websites.
+.row
+  .span12
+    %h4 Quota
+    %table.table-bordered.table-striped.table
+      %caption.hidden Filesystem quotas
+      %thread
+        %tr
+          - @data[:quota].first.each do |th|
+            %th= th
+      %tbody
+        - @data[:quota].drop(1).each do |row|
+          - if row[1].to_f > row[2].to_f
+            %tr{class: 'error'}
+              -row.each do |element|
+                %td= element
+          - else
+            %tr
+              - row.each do |element|
+                %td= element
+    %p
+      %i.icon-info-sign
+      You can change your file system quotas <a href="https://uwnetid.washington.edu/manage/">here</a>.
+.row
+  .span12
+    %h4 Processes
+
+%hr/
+%h4 Diagnostics
+%p
+  - @data.each do |k,v|
+    %strong
+      = k
+    = v
+    %br/
+  %hr/
+%footer
+  %a{:href => "/#{@netid}.json"} JSON Feed
+
+
+
+

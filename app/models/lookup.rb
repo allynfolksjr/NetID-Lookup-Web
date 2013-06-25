@@ -17,16 +17,16 @@ class Lookup
   end
 
   def validate_netid
-     netid_interface.validate_netid?(netid)
+     netid_interface.validate_netid?
   end
 
   def do
     metadata = {}
     metadata[:mysql] = check_for_mysql
-    metadata[:processes] = get_processes
+    # metadata[:processes] = get_processes
     metadata[:localhome] = check_for_localhome
     metadata[:webtypes] = check_webtype
-    # metadata[:quota] = check_quota
+    metadata[:quota] = check_quota
     metadata
   end
 
@@ -61,7 +61,7 @@ class Lookup
   end
 
   def check_quota
+    result = netid_interface.check_quota
+    result ? result : false
   end
-
-
 end
