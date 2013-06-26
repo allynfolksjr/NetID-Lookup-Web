@@ -23,7 +23,7 @@ class Lookup
   def do
     metadata = {}
     metadata[:mysql] = check_for_mysql
-    # metadata[:processes] = get_processes
+    metadata[:processes] = get_processes
     metadata[:localhome] = check_for_localhome
     metadata[:webtypes] = check_webtype
     metadata[:quota] = check_quota
