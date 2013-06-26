@@ -40,11 +40,11 @@ class Lookup
   end
 
   def get_processes
-    results = {}
+    results = []
     hosts.each do |host|
       processes = netid_interface.get_processes(host)
       if processes
-        results[host.to_s] = processes
+        results << processes
       end
     end
     results
