@@ -13,7 +13,9 @@ class Lookup
       "vergil.u.washington.edu"
     ]
 
-    @netid_interface = Netid.new(netid, system_user)
+    @netid_interface = Netid.new({
+      netid: netid,
+      system_user: system_user})
   end
 
   def validate_netid
@@ -33,7 +35,7 @@ class Lookup
   def check_for_mysql
     results = []
     hosts.each do |host|
-      result = netid_interface.check_for_mysql_presence(host)
+      result = netid_interface.check_for_mysql_presence(host).response
       results << host if result
     end
     results.empty? ? false : results
@@ -51,17 +53,17 @@ class Lookup
   end
 
   def check_for_localhome
-    result = netid_interface.check_for_localhome
+    result = netid_interface.check_for_localhome.response
     result ? result : false
   end
 
   def check_webtype
-    result = netid_interface.check_webtype
+    result = netid_interface.check_webtype.response
     result ? result : false
   end
 
   def check_quota
-    result = netid_interface.check_quota
+    result = netid_interface.check_quota.response
     result ? result : false
   end
 end
