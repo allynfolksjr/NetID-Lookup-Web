@@ -96,8 +96,12 @@
 
 
 %hr/
-%h4 Diagnostics
-%p
+.dia-toggle
+  %h4#dia-toggle
+    %i.icon-chevron-right.default-on
+    %i.icon-chevron-down.default-off{style: 'display: none'}
+    Diagnostics
+%p#diagnostics{style: 'display: none'}
   - @data.each do |k,v|
     %strong
       = k
