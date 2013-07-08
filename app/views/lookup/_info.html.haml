@@ -79,37 +79,52 @@
       You can change your file system quotas <a href="https://uwnetid.washington.edu/manage/">here</a>.
 .row
   .span12
-    %h4 Processes
-    - @data[:processes].each do |host|
-      %h5= host.hostname
-      %table.table-bordered.table-striped.table
-        %caption.hidden= "Processes for #{host.hostname}"
-        %thread
-          %tr
-            -host.headers.each do |th|
-              %th= th
-        %tbody
-          -host.processes.each do |process|
-            %tr
-              -process.each do |element|
-                %td= element
+    .processes.clustered-content
+      %h4 Processes
+      %p
+        %span.expand-all Expand All
+        |
+        %span.collapse-all Collapse All
+      - @data[:processes].each do |host|
+        .hidden-things
+          %h5.hidden-content-toggle
+            %i.icon-chevron-right.default-on
+            %i.icon-chevron-down.default-off{style: 'display: none'}
+            =host.hostname
+          %table.table-bordered.table-striped.table.hidden-content{style: 'display: none'}
+            %caption.hidden= "Processes for #{host.hostname}"
+            %thread
+              %tr
+                -host.headers.each do |th|
+                  %th= th
+            %tbody
+              -host.processes.each do |process|
+                %tr
+                  -process.each do |element|
+                    %td= element
 
 
 %hr/
-.dia-toggle
-  %h4#dia-toggle
-    %i.icon-chevron-right.default-on
-    %i.icon-chevron-down.default-off{style: 'display: none'}
-    Diagnostics
-%p#diagnostics{style: 'display: none'}
-  - @data.each do |k,v|
-    %strong
-      = k
-    = v
-    %br/
-  %hr/
-%footer
-  %a{:href => "/#{@netid}.json"} JSON Feed
+.row
+  .span12
+    .hidden-things
+      .hidden-content-toggle
+        %h5
+          %i.icon-chevron-right.default-on
+          %i.icon-chevron-down.default-off{style: 'display: none'}
+          Diagnostics
+      .hidden-content{style: 'display: none'}
+        %p
+          - @data.each do |k,v|
+            %strong
+              = k
+            = v
+            %br/
+          %hr/
+.row
+  .span12
+    %footer
+      %a{:href => "/#{@netid}.json"} JSON Feed
 
 
 
