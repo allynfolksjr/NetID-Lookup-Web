@@ -63,7 +63,7 @@ class Lookup
   end
 
   def check_quota
-    result = netid_interface.check_quota.response
+    result = netid_interface.check_quota
     result ? result : false
   end
 end

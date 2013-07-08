@@ -62,10 +62,10 @@
       %caption.hidden Filesystem quotas
       %thread
         %tr
-          - @data[:quota].first.each do |th|
+          - @data[:quota].headers.each do |th|
             %th= th
       %tbody
-        - @data[:quota].drop(1).each do |row|
+        - @data[:quota].response.each do |row|
           - if row[1].to_f > row[2].to_f
             %tr{class: 'error'}
               -row.each do |element|
