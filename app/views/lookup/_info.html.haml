@@ -80,12 +80,19 @@
 .row
   .span12
     %h4 Processes
-    =@data["processes"]
     - @data[:processes].each do |host|
       %h5= host.hostname
-      %p= host.headers
-      - host.processes.each do |process|
-        %p= process
+      %table.table-bordered.table-striped.table
+        %caption.hidden= "Processes for #{host.hostname}"
+        %thread
+          %tr
+            -host.headers.each do |th|
+              %th= th
+        %tbody
+          -host.processes.each do |process|
+            %tr
+              -process.each do |element|
+                %td= element
 
 
 %hr/
