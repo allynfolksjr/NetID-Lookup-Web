@@ -86,6 +86,7 @@
         |
         %span.collapse-all Collapse All
       - @data[:processes].each do |host|
+        - next if host.response == false
         .hidden-things
           %h5.hidden-content-toggle
             %i.icon-chevron-right.default-on
@@ -98,7 +99,7 @@
                 -host.headers.each do |th|
                   %th= th
             %tbody
-              -host.processes.each do |process|
+              -host.response.each do |process|
                 %tr
                   -process.each do |element|
                     %td= element
